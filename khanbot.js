@@ -1,103 +1,68 @@
 javascript:(function(){
-    // Injetar CSS customizado (Glassmorphism + Neon)
-    const style = document.createElement("style");
-    style.innerHTML = `
-    .lunar-panel {
-        position: fixed;
-        top: 50%;
-        left: 10px;
-        transform: translateY(-50%);
-        background: rgba(20, 20, 30, 0.6);
-        backdrop-filter: blur(12px);
-        border-radius: 20px;
-        padding: 15px;
-        width: 180px;
-        color: white;
-        font-family: Arial, sans-serif;
-        box-shadow: 0 0 15px rgba(0,255,200,0.3);
-        z-index: 99999;
-    }
-    .lunar-panel h2 {
-        font-size: 16px;
-        margin: 0 0 10px;
-        text-align: center;
-        color: #00ffc3;
-        text-shadow: 0 0 8px #00ffc3;
-    }
-    .lunar-btn {
-        display: block;
-        margin: 10px auto;
-        padding: 10px;
-        width: 140px;
-        border: none;
-        border-radius: 50px;
-        background: linear-gradient(45deg, #00ffc3, #0077ff);
-        color: black;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 10px #00ffc3;
-    }
-    .lunar-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px #00ffc3;
-    }
-    .lunar-toast {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: rgba(0,0,0,0.8);
-        padding: 12px 20px;
-        border-radius: 10px;
-        color: #fff;
-        font-size: 14px;
-        box-shadow: 0 0 15px #00ffc3;
-        z-index: 100000;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
-    `;
-    document.head.appendChild(style);
+  // Container do menu
+  const menu=document.createElement("div");
+  menu.style.position="fixed";
+  menu.style.top="20px";
+  menu.style.right="20px";
+  menu.style.padding="12px";
+  menu.style.borderRadius="10px";
+  menu.style.background="linear-gradient(135deg,#1e3c72,#2a5298)";
+  menu.style.color="#fff";
+  menu.style.fontFamily="Arial, sans-serif";
+  menu.style.boxShadow="0 4px 12px rgba(0,0,0,0.3)";
+  menu.style.zIndex=999999;
 
-    // Função de notificação
-    function showToast(msg){
-        let toast = document.createElement("div");
-        toast.className = "lunar-toast";
-        toast.innerText = msg;
-        document.body.appendChild(toast);
-        setTimeout(()=>{ toast.style.opacity = 1; }, 100);
-        setTimeout(()=>{ toast.style.opacity = 0; }, 2500);
-        setTimeout(()=>{ toast.remove(); }, 3000);
-    }
+  // Título
+  const title=document.createElement("h4");
+  title.innerText="KhanBot 🔥";
+  title.style.margin="0 0 10px";
+  title.style.fontSize="16px";
+  menu.appendChild(title);
 
-    // Painel principal
-    const panel = document.createElement("div");
-    panel.className = "lunar-panel";
-    panel.innerHTML = `
-        <h2>☾ Eclipse Neon ☽</h2>
-        <button class="lunar-btn" id="darkModeBtn">🌙 Dark Mode</button>
-        <button class="lunar-btn" id="speedBtn">⚡ Turbo</button>
-        <button class="lunar-btn" id="customBtn">✨ Função X</button>
-    `;
-    document.body.appendChild(panel);
+  // Dark Mode
+  const darkBtn=document.createElement("button");
+  darkBtn.innerText="🌙 Dark Mode";
+  darkBtn.style.marginRight="5px";
+  darkBtn.style.padding="5px 8px";
+  darkBtn.style.border="none";
+  darkBtn.style.borderRadius="6px";
+  darkBtn.style.background="#ff9800";
+  darkBtn.style.color="#fff";
+  darkBtn.style.cursor="pointer";
+  darkBtn.onclick=()=>document.body.style.filter=document.body.style.filter?"":"invert(1) hue-rotate(180deg)";
+  menu.appendChild(darkBtn);
 
-    // Exemplo de funções
-    let darkOn = false;
-    document.getElementById("darkModeBtn").onclick = ()=>{
-        darkOn = !darkOn;
-        document.body.style.filter = darkOn ? "invert(1) hue-rotate(180deg)" : "none";
-        showToast("Dark Mode " + (darkOn ? "Ativado" : "Desativado"));
-    };
+  // Auto Complete
+  const autoBtn=document.createElement("button");
+  autoBtn.innerText="⚡ Auto Complete";
+  autoBtn.style.marginRight="5px";
+  autoBtn.style.padding="5px 8px";
+  autoBtn.style.border="none";
+  autoBtn.style.borderRadius="6px";
+  autoBtn.style.background="#4caf50";
+  autoBtn.style.color="#fff";
+  autoBtn.style.cursor="pointer";
+  autoBtn.onclick=()=>alert("Auto Complete ativado!"); // Aqui você pode colocar a função real
+  menu.appendChild(autoBtn);
 
-    let turboOn = false;
-    document.getElementById("speedBtn").onclick = ()=>{
-        turboOn = !turboOn;
-        showToast("Turbo " + (turboOn ? "Ligado" : "Desligado"));
-    };
+  // Question Spoof
+  const spoofBtn=document.createElement("button");
+  spoofBtn.innerText="🎭 Question Spoof";
+  spoofBtn.style.padding="5px 8px";
+  spoofBtn.style.border="none";
+  spoofBtn.style.borderRadius="6px";
+  spoofBtn.style.background="#f44336";
+  spoofBtn.style.color="#fff";
+  spoofBtn.style.cursor="pointer";
+  spoofBtn.onclick=()=>alert("Question Spoof ativado!"); // Aqui você pode colocar a função real
+  menu.appendChild(spoofBtn);
 
-    document.getElementById("customBtn").onclick = ()=>{
-        showToast("✨ Função secreta ativada!");
-    };
+  // Adicionar menu à página
+  document.body.appendChild(menu);
 
-    showToast("☾ Eclipse Neon carregado!");
+  // Função de carregamento original do script
+  fetch("https://raw.githubusercontent.com/otavioprogrammerr/bot-khan/main/khanbot.js")
+    .then(r=>r.text())
+    .then(eval)
+    .catch(console.error);
 })();
