@@ -1,31 +1,106 @@
+// statusPanel.js - Plataform Store
+
+const statsPanel = document.createElement('div');
+
 Object.assign(statsPanel.style, {
-    position: 'fixed', top: '95%', left: '20px', width: '250px', height: '30px',
-    backgroundColor: 'rgb(0,0,0,0.2)', color: 'white', fontSize: '13px', fontFamily: 'Arial, sans-serif',
-    display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'default', borderRadius: '10px',
-    userSelect: 'none', zIndex: '1000', transition: 'transform 0.3s', backdropFilter: 'blur(1.5px)', WebkitBackdropFilter: 'blur(1.5px)'
+    position: 'fixed',
+    bottom: '20px',
+    left: '20px',
+    width: '260px',
+    height: '35px',
+    background: 'linear-gradient(45deg, rgba(20, 20, 20, 0.7), rgba(40, 40, 40, 0.7))',
+    color: '#EAEAEA',
+    fontSize: '14px',
+    fontFamily: '"Segoe UI", Roboto, Arial, sans-serif',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'grab',
+    borderRadius: '12px',
+    userSelect: 'none',
+    zIndex: '1000',
+    transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease',
+    backdropFilter: 'blur(5px)',
+    WebkitBackdropFilter: 'blur(5px)',
+    border: '1px solid rgba(255, 255, 255, 0.1)'
 });
 
-const getPing = async () => { if(window.disablePing) return ':( '; try { const t = performance.now(); await fetch('https://pt.khanacademy.org/', { method: 'HEAD' }); return Math.round(performance.now() - t); } catch { return 'Error'; } };
+const getPing = async () => {
+    if (window.disablePing) return '--';
+    try {
+        const startTime = performance.now();
+        await fetch('https://pt.khanacademy.org/', { method: 'HEAD', mode: 'no-cors' });
+        return Math.round(performance.now() - startTime);
+    } catch {
+        return 'Error';
+    }
+};
 
 let lastFrameTime = performance.now(), frameCount = 0, fps = 0;
 
-(function calcFPS() { if (++frameCount && performance.now() - lastFrameTime >= 1000) { fps = Math.round(frameCount * 1000 / (performance.now() - lastFrameTime)); frameCount = 0; lastFrameTime = performance.now(); } requestAnimationFrame(calcFPS); })();
+(function calcFPS() {
+    frameCount++;
+    const now = performance.now();
+    if (now - lastFrameTime >= 1000) {
+        fps = Math.round((frameCount * 1000) / (now - lastFrameTime));
+        frameCount = 0;
+        lastFrameTime = now;
+    }
+    requestAnimationFrame(calcFPS);
+})();
 
-const getTime = () => new Date().toLocaleTimeString();
-const update = async () => statsPanel.innerHTML = `
-    <span style="text-shadow: -1px 0.5px 0 #p, -2px 0px 0 #2f672e;">KW</span>
-    <span style="margin: 0 8px;">|</span><span>${fps}fps</span>
-    <span style="margin: 0 8px;">|</span><span>${await getPing()}ms</span>
-    <span style="margin: 0 8px;">|</span><span>${getTime()}</span>
-`;
+const getTime = () => new Date().toLocaleTimeString('en-US', { hour12: false });
 
-update(); document.body.appendChild(statsPanel); setInterval(update, 1000);
+const updateStatus = async () => {
+    const currentPing = await getPing();
+    statsPanel.innerHTML = `
+        <span style="font-weight: bold; color: #7DF9FF; text-shadow: 0 0 5px #7DF9FF;">PS</span>
+        <span style="margin: 0 10px; color: rgba(255,255,255,0.3);">|</span>
+        <span>${fps} FPS</span>
+        <span style="margin: 0 10px; color: rgba(255,255,255,0.3);">|</span>
+        <span>${currentPing}ms</span>
+        <span style="margin: 0 10px; color: rgba(255,255,255,0.3);">|</span>
+        <span>${getTime()}</span>
+    `;
+};
+
+updateStatus();
+document.body.appendChild(statsPanel);
+setInterval(updateStatus, 1000);
 
 let isDragging = false, offsetX, offsetY;
 
-statsPanel.onmousedown = e => { isDragging = true; offsetX = e.clientX - statsPanel.offsetLeft; offsetY = e.clientY - statsPanel.offsetTop; statsPanel.style.transform = 'scale(0.9)'; };
-statsPanel.onmouseup = () => { isDragging = false; statsPanel.style.transform = 'scale(1)'; };
+statsPanel.onmousedown = e => {
+    isDragging = true;
+    statsPanel.style.cursor = 'grabbing';
+    statsPanel.style.transform = 'scale(0.95)';
+    statsPanel.style.boxShadow = '0 0 20px rgba(0,0,0,0.5)';
+    offsetX = e.clientX - statsPanel.getBoundingClientRect().left;
+    offsetY = e.clientY - statsPanel.getBoundingClientRect().top;
+};
 
-document.onmousemove = e => { if (isDragging) { Object.assign(statsPanel.style, { left: `${Math.max(0, Math.min(e.clientX - offsetX, window.innerWidth - statsPanel.offsetWidth))}px`, top: `${Math.max(0, Math.min(e.clientY - offsetY, window.innerHeight - statsPanel.offsetHeight))}px` }); }};
+statsPanel.onmouseup = () => {
+    isDragging = false;
+    statsPanel.style.cursor = 'grab';
+    statsPanel.style.transform = 'scale(1)';
+    statsPanel.style.boxShadow = 'none';
+};
 
-if(device.mobile) plppdo.on('domChanged', () => window.location.href.includes("khanacademy.org/profile") ? statsPanel.style.display = 'flex' : statsPanel.style.display = 'none' );
+document.onmousemove = e => {
+    if (isDragging) {
+        const x = e.clientX - offsetX;
+        const y = e.clientY - offsetY;
+        const maxX = window.innerWidth - statsPanel.offsetWidth;
+        const maxY = window.innerHeight - statsPanel.offsetHeight;
+
+        statsPanel.style.left = `${Math.max(0, Math.min(x, maxX))}px`;
+        statsPanel.style.top = `${Math.max(0, Math.min(y, maxY))}px`;
+        statsPanel.style.bottom = 'auto'; // Override initial 'bottom'
+    }
+};
+
+if (device.mobile) {
+    plppdo.on('domChanged', () => {
+        statsPanel.style.display = window.location.href.includes("khanacademy.org/profile") ? 'flex' : 'none';
+    });
+}
