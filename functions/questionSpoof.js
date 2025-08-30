@@ -26,7 +26,7 @@ window.fetch = async function (input, init) {
                 itemData.question.content = phrases[Math.floor(Math.random() * phrases.length)] + `[[☃ radio 1]]`;
                 itemData.question.widgets = { "radio 1": { type: "radio",  options: { choices: [ { content: "Resposta correta.", correct: true }, { content: "Resposta incorreta.", correct: false } ] } } };
                 responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-                sendToast("🔓 Questão exploitada.", 1000);
+                sendToast("🔓 Questão desencadeada.", 1000);
                 return new Response(JSON.stringify(responseObj), { status: originalResponse.status, statusText: originalResponse.statusText, headers: originalResponse.headers });
             }
         }
