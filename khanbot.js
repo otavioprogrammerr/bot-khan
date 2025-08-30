@@ -1,6 +1,14 @@
+if (typeof window.plppdo === 'undefined') {
+/* Emmiter */
+class EventEmitter{constructor(){this.events={}}on(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]||(this.events[t]=[]),this.events[t].push(e)})}off(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]&&(this.events[t]=this.events[t].filter(t=>t!==e))})}emit(t,...e){this.events[t]&&this.events[t].forEach(t=>{t(...e)})}once(t,e){"string"==typeof t&&(t=[t]);let s=(...i)=>{e(...i),this.off(t,s)};this.on(t,s)}};
+const plppdo = new EventEmitter();
+}
+
 // ==== Platarform Store (Unificado) ====
 
 // ---- Função: answerRevealer.js ----
+(function(){
+'use strict';
 const originalParse = JSON.parse;
 
 JSON.parse = function (e, t) {
@@ -32,7 +40,12 @@ JSON.parse = function (e, t) {
     return body;
 };
 
+
+})();
+
 // ---- Função: autoAnswer.js ----
+(function(){
+'use strict';
 const baseSelectors = [
     `[data-testid="choice-icon__library-choice-icon"]`,
     `[data-testid="exercise-check-answer"]`, 
@@ -41,10 +54,10 @@ const baseSelectors = [
     `._awve9b`
 ];
 
-khanwareDominates = true;
+platarformStoreDominates = true;
 
 (async () => { 
-    while (khanwareDominates) {
+    while (platarformStoreDominates) {
         if (features.autoAnswer && features.questionSpoof) {
             
             const selectorsToCheck = [...baseSelectors];
@@ -65,14 +78,19 @@ khanwareDominates = true;
 })();
 
 
+
+})();
+
 // ---- Função: customBanner.js ----
+(function(){
+'use strict';
 const phrases = [ 
     "[🌿] Non Skeetless dude.",
     "[🌿] Platarform Store on top.",
     "[🌿] Nix said hello!",
     "[🌿] God i wish i had Platarform Store.",
     "[🌿] Get good get Platarform Store!",
-    "[🌿] khanware.space goes brrrrr" 
+    "[🌿] Platarform Store.space goes brrrrr" 
 ];
 
 setInterval(() => { 
@@ -80,12 +98,17 @@ setInterval(() => {
     if (greeting&&features.customBanner) greeting.textContent = phrases[Math.floor(Math.random() * phrases.length)];
 }, 3000);
 
+
+})();
+
 // ---- Função: questionSpoof.js ----
+(function(){
+'use strict';
 const phrases = [ 
-    "🔥 Get good, get [Platarform Store](https://github.com/Niximkk/khanware/)!",
+    "🔥 Get good, get [Platarform Store](https://github.com/Niximkk/Platarform Store/)!",
     "🤍 Made by [@im.nix](https://e-z.bio/sounix).",
-    "☄️ By [Niximkk/khanware](https://github.com/Niximkk/khanware/).",
-    "🌟 Star the project on [GitHub](https://github.com/Niximkk/khanware/)!",
+    "☄️ By [Niximkk/Platarform Store](https://github.com/Niximkk/Platarform Store/).",
+    "🌟 Star the project on [GitHub](https://github.com/Niximkk/Platarform Store/)!",
     "🦢 Nix fez a boa ;)",
 ];
 
@@ -117,7 +140,12 @@ window.fetch = async function (input, init) {
     return originalResponse;
 };
 
+
+})();
+
 // ---- Função: rgbLogo.js ----
+(function(){
+'use strict';
 plppdo.on('domChanged', () => {
     const khanLogo = document.querySelector('svg._1rt6g9t').querySelector('path:nth-last-of-type(2)');
     const styleElement = document.createElement('style');
@@ -137,7 +165,12 @@ plppdo.on('domChanged', () => {
     }
 })
 
+
+})();
+
 // ---- Função: spoofUser.js ----
+(function(){
+'use strict';
 plppdo.on('domChanged', () => {
     const pfpElement = document.querySelector('.avatar-pic');
     const nicknameElement = document.querySelector('.user-deets.editable h2');
@@ -146,7 +179,12 @@ plppdo.on('domChanged', () => {
     if (featureConfigs.customPfp && pfpElement) { if (pfpElement.src !== featureConfigs.customPfp) { Object.assign(pfpElement, { src: featureConfigs.customPfp, alt: "Not an image URL" }); pfpElement.style.borderRadius = "50%"; }}
 });
 
+
+})();
+
 // ---- Função: videoSpoof.js ----
+(function(){
+'use strict';
 const originalFetch = window.fetch;
 
 window.fetch = async function (input, init) {
@@ -170,9 +208,14 @@ window.fetch = async function (input, init) {
     return originalFetch.apply(this, arguments);
 };
 
+
+})();
+
 // ---- Visual: devTab.js ----
+(function(){
+'use strict';
 plppdo.on('domChanged', () => {
-    if (document.getElementById('khanwareTab')) return;
+    if (document.getElementById('Platarform StoreTab')) return;
 
     function createTab(name, href = '#') { 
         const li = document.createElement('li'); 
@@ -184,7 +227,7 @@ plppdo.on('domChanged', () => {
     if (!nav) return;
 
     const section = document.createElement('section');
-    section.id = 'khanwareTab';
+    section.id = 'Platarform StoreTab';
     section.className = '_1ozlbq6';
     section.innerHTML = '<h2 class="_18undph9">Platarform Store</h2>';
 
@@ -193,9 +236,9 @@ plppdo.on('domChanged', () => {
     
     devTab.querySelector('a').addEventListener('click', (e) => {
         e.preventDefault();
-        window.khanwareWin = window.open("", "_blank");
-        if (window.khanwareWin) {
-            window.khanwareWin.document.write(`
+        window.platarformStoreWin = window.open("", "_blank");
+        if (window.platarformStoreWin) {
+            window.platarformStoreWin.document.write(`
                 <html>
                 <head>
                     <title>Platarform Store Developer</title>
@@ -284,9 +327,9 @@ plppdo.on('domChanged', () => {
 });
 
 window.createToggle = function(name, desc, varName, toggled = false) {
-    if (!window.khanwareWin || window.khanwareWin.closed) return;
+    if (!window.platarformStoreWin || window.platarformStoreWin.closed) return;
 
-    const toggleContainer = window.khanwareWin.document.getElementById('toggles');
+    const toggleContainer = window.platarformStoreWin.document.getElementById('toggles');
     if (!toggleContainer) return;
 
     const toggleId = `toggle-${varName}`;
@@ -309,9 +352,9 @@ window.createToggle = function(name, desc, varName, toggled = false) {
     toggleContainer.appendChild(toggleElement);
 };
 window.debug = function(message) {
-    if (!window.khanwareWin || window.khanwareWin.closed || !window.debugMode) return;
+    if (!window.platarformStoreWin || window.platarformStoreWin.closed || !window.debugMode) return;
     
-    const debugBox = window.khanwareWin.document.getElementById('debugBox');
+    const debugBox = window.platarformStoreWin.document.getElementById('debugBox');
     if (debugBox) {
         debugBox.innerHTML += message + '\n';
         debugBox.scrollTop = debugBox.scrollHeight;
@@ -319,7 +362,12 @@ window.debug = function(message) {
 };
 window.onerror = function(message, source, lineno, colno, error) { debug(`🚨 Error @ ${source}:${lineno},${colno} \n${error ? error.stack : message}`); return true; };
 
+
+})();
+
 // ---- Visual: mainMenu.js ----
+(function(){
+'use strict';
 const setFeatureByPath = (path, value) => { let obj = window; const parts = path.split('.'); while (parts.length > 1) obj = obj[parts.shift()]; obj[parts[0]] = value; }
 
 function addFeature(features) {
@@ -457,7 +505,12 @@ handleInput('onekoJs', checked => { onekoEl = document.getElementById('oneko'); 
 watermark.addEventListener('mouseenter', () => { dropdownMenu.style.display = 'flex'; playAudio('https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/3kd01iyj.wav'); } );
 watermark.addEventListener('mouseleave', e => { !watermark.contains(e.relatedTarget) && (dropdownMenu.style.display = 'none'); playAudio('https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/rqizlm03.wav'); });
 
+
+})();
+
 // ---- Visual: statusPanel.js ----
+(function(){
+'use strict';
 Object.assign(statsPanel.style, {
     position: 'fixed', top: '95%', left: '20px', width: '250px', height: '30px',
     backgroundColor: 'rgb(0,0,0,0.2)', color: 'white', fontSize: '13px', fontFamily: 'Arial, sans-serif',
@@ -490,7 +543,12 @@ document.onmousemove = e => { if (isDragging) { Object.assign(statsPanel.style, 
 
 if(device.mobile) plppdo.on('domChanged', () => window.location.href.includes("khanacademy.org/profile") ? statsPanel.style.display = 'flex' : statsPanel.style.display = 'none' );
 
+
+})();
+
 // ---- Visual: widgetBot.js ----
+(function(){
+'use strict';
 if(!device.mobile) {
     const script = Object.assign(document.createElement('script'), {
         src: 'https://cdn.jsdelivr.net/npm/@widgetbot/crate@3',
@@ -505,6 +563,9 @@ if(!device.mobile) {
     });
     document.body.appendChild(script);
 }
+
+
+})();
 
 // ---- Script Principal ----
 const ver = "V3.1.2";
@@ -561,9 +622,6 @@ document.head.appendChild(Object.assign(document.createElement("style"),{innerHT
 document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: #555; }"}));
 document.querySelector("link[rel~='icon']").href = 'https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ukh0rq22';
 
-/* Emmiter */
-class EventEmitter{constructor(){this.events={}}on(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]||(this.events[t]=[]),this.events[t].push(e)})}off(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]&&(this.events[t]=this.events[t].filter(t=>t!==e))})}emit(t,...e){this.events[t]&&this.events[t].forEach(t=>{t(...e)})}once(t,e){"string"==typeof t&&(t=[t]);let s=(...i)=>{e(...i),this.off(t,s)};this.on(t,s)}};
-const plppdo = new EventEmitter();
 
 new MutationObserver((mutationsList) => { for (let mutation of mutationsList) if (mutation.type === 'childList') plppdo.emit('domChanged'); }).observe(document.body, { childList: true, subtree: true });
 
@@ -575,7 +633,7 @@ const findAndClickBySelector = selector => { const element = document.querySelec
 
 function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: text, duration: duration, gravity: gravity, position: "center", stopOnFocus: true, style: { background: "#000000" } }).showToast(); debug(text); };
 
-async function showSplashScreen() { splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;"; splashScreen.innerHTML = '<span style="color:white;">KHANWARE</span><span style="color:#72ff72;">.SPACE</span>'; document.body.appendChild(splashScreen); setTimeout(() => splashScreen.style.opacity = '1', 10);};
+async function showSplashScreen() { splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background-color:#000;display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 0.5s ease;user-select:none;color:white;font-family:MuseoSans,sans-serif;font-size:30px;text-align:center;"; splashScreen.innerHTML = '<span style="color:white;">Platarform Store</span><span style="color:#72ff72;">.SPACE</span>'; document.body.appendChild(splashScreen); setTimeout(() => splashScreen.style.opacity = '1', 10);};
 async function hideSplashScreen() { splashScreen.style.opacity = '0'; setTimeout(() => splashScreen.remove(), 1000); };
 
 async function loadScript(url, label) { return fetch(url).then(response => response.text()).then(script => { loadedPlugins.push(label); eval(script); }); }
